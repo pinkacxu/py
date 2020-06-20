@@ -1,0 +1,17 @@
+import requests
+url = "https://api.openweathermap.org/data/2.5/forecast?q="
+cood = "lat=35.0186&lon=135.75553"
+city = "Kyoto,JP"
+key = "b87a75ea8b7164ec2b221d58c85ea7ed"
+cnt = 8 # Next 24 hours
+r = requests.get( url + city + "&cnt=" + str(cnt) +
+"&units=metric" + "&appid=" + key )
+rj = r.json()
+print( "City =", rj['city']['name'] )
+for i in range( rj[ 'cnt' ] ):
+    dt = rj['list'][i]['dt_txt']
+    id = rj['list'][i]['weather'][0]['id']
+    wd = rj['list'][i]['weather'][0]['description']
+    print( dt, ":", id, wd )
+    if rj['list'][i]['weather'][0]['id']>=500:
+            print("Umbrella must be carried")
